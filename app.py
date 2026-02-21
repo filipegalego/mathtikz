@@ -20,6 +20,8 @@ Regras obrigatórias:
 - Código limpo, com comentários
 - Imagem com boa margem e proporções para impressão A4
 - Se usares pgfplots, usa SEMPRE \\pgfplotsset{compat=1.14} (nunca versões superiores)
+- Verifica SEMPRE a correção matemática: coordenadas, interseções, vértices, ângulos e labels devem ser matematicamente exatos
+- Em gráficos de funções: calcula analiticamente os zeros, vértices e pontos notáveis antes de os marcar
 - RESPONDE APENAS com o código LaTeX puro, sem explicações, sem blocos markdown, sem crases."""
 
 
