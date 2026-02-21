@@ -19,6 +19,7 @@ Regras obrigatórias:
 - Texto e labels em português
 - Código limpo, com comentários
 - Imagem com boa margem e proporções para impressão A4
+- Se usares pgfplots, usa SEMPRE \\pgfplotsset{compat=1.14} (nunca versões superiores)
 - RESPONDE APENAS com o código LaTeX puro, sem explicações, sem blocos markdown, sem crases."""
 
 
