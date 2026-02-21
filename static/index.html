@@ -116,11 +116,12 @@
 
       const encoded = encodeURIComponent(code);
       const pdfUrl = 'https://latexonline.cc/compile?text=' + encoded + '&command=pdflatex';
-      const pngUrl = 'https://latexonline.cc/compile?text=' + encoded + '&command=pdflatex&output=png';
+      const pngUrl = 'https://latex2image.joeraut.com/?code=' + encoded + '&format=png&quality=high';
       document.getElementById('previewArea').innerHTML =
         `<iframe src="${pdfUrl}" style="width:100%;height:480px;border:1px solid #e0e0e0;border-radius:8px;" title="Imagem LaTeX"></iframe>`;
       document.getElementById('btnPdf').href = pdfUrl;
       document.getElementById('btnPng').href = pngUrl;
+      document.getElementById('btnPng').setAttribute('download', 'imagem-matematica.png');
       document.getElementById('result').style.display = 'block';
       setStatus('success', '✅ Imagem gerada com sucesso!');
     } catch (e) {
