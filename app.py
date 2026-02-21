@@ -102,6 +102,19 @@ def generate():
     return jsonify({"code": code})
 
 
+@app.route("/test")
+def test():
+    import requests as req
+    key = OPENROUTER_API_KEY
+    if not key:
+        return jsonify({"error": "Chave não configurada"})
+    try:
+        r = req.get("https://openrouter.ai/api/v1/models",
+                    headers={"Authorization": f"Bearer {key}"}, timeout=10)
+        return jsonify({"status": r.status_code, "ok": r.ok, "body": r.text[:300]})
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
