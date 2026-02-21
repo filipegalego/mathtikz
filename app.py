@@ -32,7 +32,7 @@ def generate():
     data = request.get_json()
     prompt = data.get("prompt", "").strip()
     model = data.get("model", "gemini-2.0-flash")
-    # Nomes de modelos válidos (atualizado)
+
     valid_models = ["gemini-2.0-flash", "gemini-2.5-flash-preview-04-17", "gemini-2.5-pro-preview-06-05"]
     if model not in valid_models:
         model = "gemini-2.0-flash"
@@ -50,33 +50,29 @@ def generate():
         "generationConfig": {"temperature": 0.2, "maxOutputTokens": 2048},
     }
 
-    # Retry automático em caso de 429 (rate limit)
-    max_retries = 4
-    wait_seconds = 15
     resp = None
-    for attempt in range(max_retries):
+    wait = 5
+    for attempt in range(3):
         try:
-            resp = requests.post(url, json=payload, timeout=60)
-            if resp.status_code == 429:
-                if attempt < max_retries - 1:
-                    time.sleep(wait_seconds)
-                    wait_seconds *= 2  # backoff exponencial: 15s, 30s, 60s
-                    continue
+            resp = requests.post(url, json=payload, timeout=30)
+            if resp.status_code == 429 and attempt < 2:
+                time.sleep(wait)
+                wait += 5  # 5s, 10s
+                continue
             resp.raise_for_status()
             break
         except requests.exceptions.RequestException as e:
-            if attempt == max_retries - 1:
+            if attempt == 2:
                 return jsonify({"error": f"Erro ao contactar Gemini: {str(e)}"}), 502
-            time.sleep(wait_seconds)
-            wait_seconds *= 2
+            time.sleep(wait)
+            wait += 5
 
     if resp is None or not resp.ok:
-        return jsonify({"error": "Limite de pedidos atingido. Tenta novamente em 1 minuto."}), 429
+        return jsonify({"error": "Limite de pedidos atingido. Aguarda 1 minuto e tenta de novo."}), 429
 
     result = resp.json()
     code = result.get("candidates", [{}])[0].get("content", {}).get("parts", [{}])[0].get("text", "")
 
-    # Limpar markdown se o modelo o incluir
     code = code.strip()
     if code.startswith("```"):
         code = code.split("\n", 1)[-1]
