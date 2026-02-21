@@ -22,6 +22,8 @@ Regras obrigatórias:
 - Se usares pgfplots, usa SEMPRE \\pgfplotsset{compat=1.14} (nunca versões superiores)
 - Verifica SEMPRE a correção matemática: coordenadas, interseções, vértices, ângulos e labels devem ser matematicamente exatos
 - Em gráficos de funções: calcula analiticamente os zeros, vértices e pontos notáveis antes de os marcar
+- Labels e coordenadas nos eixos NUNCA devem sobrepor-se: usa sempre deslocamentos explícitos com `node[above left]`, `node[below right]`, `node[anchor=north]`, etc. para afastar os labels dos pontos e das marcas dos eixos
+- Nas marcas dos eixos (ticks), usa `node[below]` para o eixo x e `node[left]` para o eixo y, com espaçamento suficiente para não sobrepor outros elementos
 - RESPONDE APENAS com o código LaTeX puro, sem explicações, sem blocos markdown, sem crases."""
 
 
