@@ -75,9 +75,18 @@ def generate():
             wait += 5
 
     if resp is None or not resp.ok:
-        return jsonify({"error": "Limite de pedidos atingido. Aguarda 1 minuto e tenta de novo."}), 429
+        status = resp.status_code if resp else 0
+        try:
+            detail = resp.json()
+        except Exception:
+            detail = resp.text if resp else "sem resposta"
+        return jsonify({"error": f"Erro {status} do OpenRouter: {detail}"}), 429
 
-    result = resp.json()
+    try:
+        result = resp.json()
+    except Exception as e:
+        return jsonify({"error": f"Resposta inválida do OpenRouter: {resp.text[:300]}"}), 500
+
     code = result.get("choices", [{}])[0].get("message", {}).get("content", "")
 
     code = code.strip()
