@@ -7,7 +7,7 @@ from flask_cors import CORS
 app = Flask(__name__, static_folder="static")
 CORS(app)
 
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
+OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY", "")
 
 SYSTEM_PROMPT = """És um especialista em TikZ e LaTeX para matemática escolar portuguesa (ensino básico e secundário).
 Dado um prompt descrevendo uma imagem matemática, gera APENAS o código LaTeX completo e funcional.
@@ -31,39 +31,46 @@ def index():
 def generate():
     data = request.get_json()
     prompt = data.get("prompt", "").strip()
-    model = data.get("model", "gemini-2.0-flash")
-
-    valid_models = ["gemini-2.0-flash", "gemini-2.5-flash-preview-04-17", "gemini-2.5-pro-preview-06-05"]
-    if model not in valid_models:
-        model = "gemini-2.0-flash"
+    model = data.get("model", "google/gemini-2.0-flash-exp:free")
 
     if not prompt:
         return jsonify({"error": "Prompt vazio."}), 400
-    if not GEMINI_API_KEY:
-        return jsonify({"error": "GEMINI_API_KEY não configurada no servidor."}), 500
+    if not OPENROUTER_API_KEY:
+        return jsonify({"error": "OPENROUTER_API_KEY não configurada no servidor."}), 500
 
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={GEMINI_API_KEY}"
+    url = "https://openrouter.ai/api/v1/chat/completions"
 
     payload = {
-        "system_instruction": {"parts": [{"text": SYSTEM_PROMPT}]},
-        "contents": [{"role": "user", "parts": [{"text": prompt}]}],
-        "generationConfig": {"temperature": 0.2, "maxOutputTokens": 2048},
+        "model": model,
+        "messages": [
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": prompt}
+        ],
+        "temperature": 0.2,
+        "max_tokens": 2048,
+    }
+
+    headers = {
+        "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+        "Content-Type": "application/json",
+        "HTTP-Referer": "https://mathtikz.app",
+        "X-Title": "MathTikZ"
     }
 
     resp = None
     wait = 5
     for attempt in range(3):
         try:
-            resp = requests.post(url, json=payload, timeout=30)
+            resp = requests.post(url, json=payload, headers=headers, timeout=30)
             if resp.status_code == 429 and attempt < 2:
                 time.sleep(wait)
-                wait += 5  # 5s, 10s
+                wait += 5
                 continue
             resp.raise_for_status()
             break
         except requests.exceptions.RequestException as e:
             if attempt == 2:
-                return jsonify({"error": f"Erro ao contactar Gemini: {str(e)}"}), 502
+                return jsonify({"error": f"Erro ao contactar o modelo: {str(e)}"}), 502
             time.sleep(wait)
             wait += 5
 
@@ -71,7 +78,7 @@ def generate():
         return jsonify({"error": "Limite de pedidos atingido. Aguarda 1 minuto e tenta de novo."}), 429
 
     result = resp.json()
-    code = result.get("candidates", [{}])[0].get("content", {}).get("parts", [{}])[0].get("text", "")
+    code = result.get("choices", [{}])[0].get("message", {}).get("content", "")
 
     code = code.strip()
     if code.startswith("```"):
