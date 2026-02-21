@@ -56,7 +56,7 @@ def generate():
     valid_models = [
         "google/gemini-2.0-flash-001",
         "meta-llama/llama-3.3-70b-instruct:free",
-        "deepseek/deepseek-r1:free",
+        "deepseek/deepseek-r1-distill-llama-70b:free",
     ]
     if model not in valid_models:
         model = "google/gemini-2.0-flash-001"
