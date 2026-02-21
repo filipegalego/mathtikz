@@ -79,7 +79,7 @@
     <div class="result-img" id="previewArea"></div>
     <div class="btn-row">
       <a class="btn-dl btn-pdf" id="btnPdf" href="#" target="_blank">⬇ Download PDF</a>
-      <a class="btn-dl btn-png" id="btnPng" href="#" target="_blank" download="imagem.png">⬇ Download PNG</a>
+      <button class="btn-dl btn-png" id="btnPng" onclick="downloadPng()">⬇ Download PNG</button>
       <button class="btn-dl btn-code" onclick="toggleCode()">{ } Ver código LaTeX</button>
     </div>
     <pre class="code-block" id="codeBlock"></pre>
@@ -87,6 +87,38 @@
 </div>
 
 <script>
+  async function downloadPng() {
+    const btn = document.getElementById('btnPng');
+    const code = btn.dataset.code;
+    if (!code) return alert('Gera uma imagem primeiro.');
+
+    btn.textContent = '⏳ A gerar PNG...';
+    btn.disabled = true;
+    try {
+      const resp = await fetch('/png', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code })
+      });
+      if (!resp.ok) {
+        const err = await resp.json();
+        throw new Error(err.error || 'Erro desconhecido');
+      }
+      const blob = await resp.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'imagem-matematica.png';
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (e) {
+      alert('Erro ao gerar PNG: ' + e.message);
+    } finally {
+      btn.textContent = '⬇ Download PNG';
+      btn.disabled = false;
+    }
+  }
+
   function setPrompt(t) { document.getElementById('prompt').value = t; }
 
   async function generate() {
@@ -116,12 +148,12 @@
 
       const encoded = encodeURIComponent(code);
       const pdfUrl = 'https://latexonline.cc/compile?text=' + encoded + '&command=pdflatex';
-      const pngUrl = 'https://latex2image.joeraut.com/?code=' + encoded + '&format=png&quality=high';
       document.getElementById('previewArea').innerHTML =
         `<iframe src="${pdfUrl}" style="width:100%;height:480px;border:1px solid #e0e0e0;border-radius:8px;" title="Imagem LaTeX"></iframe>`;
       document.getElementById('btnPdf').href = pdfUrl;
-      document.getElementById('btnPng').href = pngUrl;
-      document.getElementById('btnPng').setAttribute('download', 'imagem-matematica.png');
+
+      // Guardar o código para o botão PNG usar depois
+      document.getElementById('btnPng').dataset.code = code;
       document.getElementById('result').style.display = 'block';
       setStatus('success', '✅ Imagem gerada com sucesso!');
     } catch (e) {
