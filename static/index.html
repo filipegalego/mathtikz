@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MathTikZ – Gerador de Imagens para Professores</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: #f0f4ff; color: #222; min-height: 100vh; }
+  header { background: linear-gradient(135deg, #1a237e, #3949ab); color: white; padding: 1.2rem 2rem; }
+  header h1 { font-size: 1.5rem; font-weight: 700; }
+  header p { font-size: 0.85rem; opacity: 0.85; margin-top: 0.2rem; }
+  .container { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+  .card { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+  .card h2 { font-size: 1rem; font-weight: 600; color: #3949ab; margin-bottom: 1rem; }
+  .examples { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+  .ex-btn { background: #e8eaf6; border: 1.5px solid #c5cae9; border-radius: 20px; padding: 0.35rem 0.85rem; font-size: 0.8rem; cursor: pointer; transition: all 0.2s; }
+  .ex-btn:hover { background: #c5cae9; }
+  textarea { width: 100%; padding: 0.8rem; border: 1.5px solid #c5cae9; border-radius: 8px; font-size: 0.95rem; resize: vertical; min-height: 90px; font-family: inherit; }
+  textarea:focus { outline: none; border-color: #3949ab; }
+  .options-row { display: flex; gap: 1rem; margin-top: 0.8rem; flex-wrap: wrap; align-items: center; font-size: 0.85rem; color: #444; }
+  select { padding: 0.5rem 0.8rem; border: 1.5px solid #c5cae9; border-radius: 8px; font-size: 0.85rem; }
+  .btn-gen { background: linear-gradient(135deg, #1a237e, #3949ab); color: white; border: none; padding: 0.7rem 2rem; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; margin-top: 1rem; width: 100%; transition: opacity 0.2s; }
+  .btn-gen:hover { opacity: 0.9; }
+  .btn-gen:disabled { opacity: 0.5; cursor: not-allowed; }
+  .status { padding: 0.8rem 1rem; border-radius: 8px; font-size: 0.9rem; margin-top: 1rem; display: none; }
+  .status.info { background: #e3f2fd; color: #0d47a1; display: block; }
+  .status.error { background: #ffebee; color: #c62828; display: block; }
+  .status.success { background: #e8f5e9; color: #2e7d32; display: block; }
+  #result { display: none; }
+  .result-img { text-align: center; margin-bottom: 1rem; }
+  .btn-row { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+  .btn-dl { padding: 0.6rem 1.4rem; border-radius: 8px; border: none; font-size: 0.9rem; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; text-align: center; }
+  .btn-pdf { background: #c62828; color: white; }
+  .btn-code { background: #e8eaf6; color: #1a237e; border: 1.5px solid #c5cae9; }
+  .btn-dl:hover { opacity: 0.85; }
+  .code-block { background: #1e1e2e; color: #cdd6f4; padding: 1rem; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 0.8rem; overflow-x: auto; white-space: pre; display: none; margin-top: 1rem; max-height: 300px; overflow-y: auto; }
+  .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.4); border-top-color: white; border-radius: 50%; animation: spin 0.8s linear infinite; vertical-align: middle; margin-right: 6px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📐 MathTikZ <span style="font-size:0.9rem;opacity:0.75;font-weight:400;">powered by Gemini</span></h1>
+  <p>Gerador de imagens matemáticas com TikZ/LaTeX para professores</p>
+</header>
+
+<div class="container">
+  <div class="card">
+    <h2>✏️ Descreve a imagem que queres criar</h2>
+    <p style="font-size:0.85rem;color:#555;margin-bottom:0.7rem;">Exemplos rápidos:</p>
+    <div class="examples">
+      <button class="ex-btn" onclick="setPrompt(this.textContent)">Triângulo retângulo com catetos a=3 e b=4, ângulos marcados e hipotenusa c=5</button>
+      <button class="ex-btn" onclick="setPrompt(this.textContent)">Gráfico da função seno de 0 a 2π com eixos e grelha</button>
+      <button class="ex-btn" onclick="setPrompt(this.textContent)">Circunferência com centro O, raio, diâmetro e corda marcados</button>
+      <button class="ex-btn" onclick="setPrompt(this.textContent)">Diagrama de Venn com dois conjuntos A e B, interseção sombreada</button>
+      <button class="ex-btn" onclick="setPrompt(this.textContent)">Parábola y = x² - 4 com vértice e intersecções com eixos marcados</button>
+      <button class="ex-btn" onclick="setPrompt(this.textContent)">Polígono regular hexágono inscrito numa circunferência</button>
+      <button class="ex-btn" onclick="setPrompt(this.textContent)">Gráfico de barras com 5 valores e eixos rotulados</button>
+      <button class="ex-btn" onclick="setPrompt(this.textContent)">Dois triângulos semelhantes com razão de semelhança 2:3</button>
+    </div>
+    <textarea id="prompt" placeholder="Ex: Triângulo isósceles com base 6 cm, lados iguais de 5 cm, altura traçada, ângulos marcados..."></textarea>
+    <div class="options-row">
+      <label>Modelo:</label>
+      <select id="model">
+        <option value="gemini-2.0-flash">Gemini 2.0 Flash (rápido)</option>
+        <option value="gemini-2.5-pro-preview-05-06">Gemini 2.5 Pro (melhor qualidade)</option>
+      </select>
+    </div>
+    <button class="btn-gen" id="btnGen" onclick="generate()">⚡ Gerar Imagem</button>
+    <div class="status" id="status"></div>
+  </div>
+
+  <div class="card" id="result">
+    <h2>🖼️ Resultado</h2>
+    <div class="result-img" id="previewArea"></div>
+    <div class="btn-row">
+      <a class="btn-dl btn-pdf" id="btnPdf" href="#" target="_blank">⬇ Abrir / Download PDF</a>
+      <button class="btn-dl btn-code" onclick="toggleCode()">{ } Ver código LaTeX</button>
+    </div>
+    <pre class="code-block" id="codeBlock"></pre>
+  </div>
+</div>
+
+<script>
+  function setPrompt(t) { document.getElementById('prompt').value = t; }
+
+  async function generate() {
+    const prompt = document.getElementById('prompt').value.trim();
+    const model = document.getElementById('model').value;
+    if (!prompt) return alert('Por favor escreve uma descrição.');
+
+    const btn = document.getElementById('btnGen');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span> A gerar código TikZ...';
+    setStatus('info', '🤖 A contactar o Gemini...');
+    document.getElementById('result').style.display = 'none';
+
+    try {
+      const resp = await fetch('/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt, model })
+      });
+      const data = await resp.json();
+      if (!resp.ok) throw new Error(data.error || 'Erro desconhecido');
+
+      const code = data.code;
+      document.getElementById('codeBlock').textContent = code;
+      setStatus('info', '📐 Código gerado! A compilar com LaTeX.Online...');
+      btn.innerHTML = '<span class="spinner"></span> A compilar LaTeX...';
+
+      const pdfUrl = 'https://latexonline.cc/compile?text=' + encodeURIComponent(code) + '&command=pdflatex';
+      document.getElementById('previewArea').innerHTML =
+        `<iframe src="${pdfUrl}" style="width:100%;height:480px;border:1px solid #e0e0e0;border-radius:8px;" title="Imagem LaTeX"></iframe>`;
+      document.getElementById('btnPdf').href = pdfUrl;
+      document.getElementById('result').style.display = 'block';
+      setStatus('success', '✅ Imagem gerada com sucesso!');
+    } catch (e) {
+      setStatus('error', '❌ Erro: ' + e.message);
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = '⚡ Gerar Imagem';
+    }
+  }
+
+  function setStatus(type, msg) {
+    const el = document.getElementById('status');
+    el.className = 'status ' + type;
+    el.textContent = msg;
+  }
+
+  function toggleCode() {
+    const el = document.getElementById('codeBlock');
+    el.style.display = el.style.display === 'block' ? 'none' : 'block';
+  }
+</script>
+</body>
+</html>
