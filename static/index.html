@@ -51,7 +51,8 @@
 <div class="container">
   <div class="card">
     <h2>✏️ Descreve a imagem que queres criar</h2>
-    <p style="font-size:0.85rem;color:#555;margin-bottom:0.7rem;">Exemplos rápidos:</p>
+    <p style="font-size:0.85rem;color:#666;margin-bottom:1rem;font-style:italic;">Para melhores resultados escreve um prompt detalhado e se necessário faz ajustes e gera novamente a imagem.</p>
+    <p style="font-size:0.85rem;color:#555;margin-bottom:0.7rem;"><strong>Exemplos rápidos:</strong></p>
     <div class="examples">
       <button class="ex-btn" onclick="setPrompt(this.textContent)">Gráfico da função seno de 0 a 2π com eixos e grelha</button>
       <button class="ex-btn" onclick="setPrompt(this.textContent)">Circunferência com centro O, raio, diâmetro e corda marcados</button>
@@ -71,6 +72,7 @@
       </select>
     </div>
     <button class="btn-gen" id="btnGen" onclick="generate()">⚡ Gerar Imagem</button>
+    <p style="font-size:0.75rem;color:#999;text-align:right;margin-top:0.4rem;">By Filipe Galego + Claude 4.6</p>
     <div class="status" id="status"></div>
   </div>
 
