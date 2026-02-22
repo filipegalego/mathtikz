@@ -29,7 +29,9 @@ Regras obrigatórias:
 - Em gráficos de funções: calcula analiticamente os zeros, vértices e pontos notáveis antes de os marcar
 - Labels e coordenadas NUNCA devem sobrepor-se: usa deslocamentos explícitos com node[above left], node[below right], node[anchor=north], etc.
 - Nas marcas dos eixos usa node[below] para eixo x e node[left] para eixo y, com espaçamento suficiente
-- Labels de segmentos de reta (comprimentos, letras) devem aparecer SEMPRE no ponto médio do segmento, nunca nas extremidades. Usa a sintaxe: \draw (A) -- node[midway, above] {$a$} (B); ou calcula o ponto médio explicitamente com coordinate (M) at ($(A)!0.5!(B)$) e coloca o label aí
+- Labels de segmentos de reta (comprimentos, letras) devem aparecer SEMPRE no ponto médio do segmento, nunca nas extremidades.
+  OBRIGATÓRIO: usa SEMPRE a sintaxe \draw (A) -- node[midway, above] {$a$} (B); com o node ENTRE os dois pontos e a opção midway.
+  PROIBIDO: \draw (A) -- (B) node[...] {$a$}; — esta sintaxe coloca o label na extremidade B, NUNCA a uses para labels de comprimento.
 - Labels de ângulos devem aparecer dentro do arco do ângulo, a uma distância adequada do vértice
 - RESPONDE APENAS com o código LaTeX puro, sem explicações, sem blocos markdown, sem crases."""
 
