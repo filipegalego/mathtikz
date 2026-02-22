@@ -20,6 +20,8 @@ Regras obrigatórias:
 - Inclui \\usepackage{tikz} e outros packages necessários (pgfplots, amsmath, amssymb, etc.)
 - Usa \\usetikzlibrary adequadas: arrows.meta, angles, quotes, calc, patterns, decorations.pathreplacing
 - Se usares pgfplots, usa SEMPRE \\pgfplotsset{compat=1.14} (nunca versões superiores)
+- Nas coordenadas de pgfplots usa SEMPRE valores numéricos decimais (ex: 3.14159, 6.28318) — NUNCA expressões simbólicas como pi, 2*pi, pi/4, sqrt(2), etc.
+- Em `axis cs:` e em `xtick`, `ytick` usa sempre números decimais com 4 casas (ex: xtick={0, 1.5708, 3.1416, 4.7124, 6.2832})
 - Texto e labels em português
 - Código limpo, com comentários
 - Imagem com boa margem e proporções para impressão A4
