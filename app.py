@@ -61,7 +61,7 @@ def generate():
     payload = {
         "system_instruction": {"parts": [{"text": SYSTEM_PROMPT}]},
         "contents": [{"role": "user", "parts": [{"text": prompt}]}],
-        "generationConfig": {"temperature": 0.2, "maxOutputTokens": 4096},
+        "generationConfig": {"temperature": 0.2, "maxOutputTokens": 8192},
     }
 
     resp = None
@@ -103,6 +103,10 @@ def generate():
 
     if not code:
         return jsonify({"error": "O modelo não devolveu código LaTeX válido."}), 500
+
+    # Verificar se o código está completo
+    if "\\end{document}" not in code:
+        return jsonify({"error": "O código LaTeX gerado está incompleto. Tenta novamente ou simplifica o prompt."}), 500
 
     return jsonify({"code": code})
 
