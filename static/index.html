@@ -392,6 +392,17 @@ function selectCat(cat) {
 }
 
 // ---- PROMPT LIVRE ----
+function checkIframe(iframe) {
+  try {
+    const doc = iframe.contentDocument || iframe.contentWindow.document;
+    if (!doc || doc.title === 'compile' || doc.body?.innerText?.includes('There were errors')) {
+      iframe.style.display = 'none';
+      document.getElementById('previewArea').innerHTML +=
+        '<p style="color:#c62828;font-size:0.85rem;margin-top:0.5rem;">⚠️ Erro de compilação LaTeX. Clica em "{ } LaTeX" para ver o código e verificar o erro, ou tenta gerar novamente.</p>';
+    }
+  } catch(e) {}
+}
+
 function setPrompt(t) {
   document.getElementById('prompt-livre').value = t;
   document.getElementById('prompt-livre').focus();
@@ -511,7 +522,7 @@ async function doGenerate(prompt, model, btnId, statusId) {
 
     const pdfUrl = 'https://latexonline.cc/compile?text=' + encodeURIComponent(code) + '&command=pdflatex';
     document.getElementById('previewArea').innerHTML =
-      `<iframe src="${pdfUrl}" title="Imagem LaTeX"></iframe>`;
+      `<iframe src="${pdfUrl}" title="Imagem LaTeX" onload="checkIframe(this)"></iframe>`;
     document.getElementById('btnPdf').href = pdfUrl;
     document.getElementById('result').style.display = 'block';
     document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
