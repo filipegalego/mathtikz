@@ -23,7 +23,8 @@ Regras obrigatórias:
 - Nas coordenadas de pgfplots usa SEMPRE valores numéricos decimais (ex: 3.14159, 6.28318) — NUNCA expressões simbólicas como pi, 2*pi, pi/4, sqrt(2), etc.
 - Em `axis cs:` e em `xtick`, `ytick` usa sempre números decimais com 4 casas (ex: xtick={0, 1.5708, 3.1416, 4.7124, 6.2832})
 - Texto e labels em português
-- Código limpo, com comentários
+- Nas setas usa SEMPRE `->` ou `<->` simples. NUNCA uses `Stealth`, `Latex`, `Triangle` ou outras pontas de seta da biblioteca arrows.meta — o compilador não as suporta
+- NUNCA carregues a biblioteca arrows.meta no \usetikzlibrary
 - Imagem com boa margem e proporções para impressão A4
 - Verifica SEMPRE a correção matemática: coordenadas, interseções, vértices, ângulos e labels devem ser matematicamente exatos
 - Em gráficos de funções: calcula analiticamente os zeros, vértices e pontos notáveis antes de os marcar
