@@ -8,219 +8,92 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Segoe UI', sans-serif; background: #f0f4ff; color: #222; min-height: 100vh; }
 
-  /* =================== BANNER =================== */
-  /* Para personalizar o banner edita apenas esta secção */
-  .banner {
-    background: linear-gradient(135deg, #1a237e, #3949ab); /* Muda as cores aqui */
-    color: white;
-    padding: 1rem 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-  .banner-logo {
-    font-size: 2rem;
-    line-height: 1;
-    /* Substitui o emoji por uma imagem:
-       <img src="logo.png" style="height:48px"> */
-  }
-  .banner-text h1 {
-    font-size: clamp(1.1rem, 3vw, 1.5rem);
-    font-weight: 700;
-    letter-spacing: 0.5px;
-  }
-  .banner-text p {
-    font-size: clamp(0.75rem, 2vw, 0.9rem);
-    opacity: 0.85;
-    margin-top: 0.15rem;
-  }
-  .banner-extra {
-    margin-left: auto;
-    text-align: right;
-    font-size: 0.8rem;
-    opacity: 0.8;
-    /* Podes colocar aqui o nome da escola, logótipo, etc. */
-  }
-  /* ============================================== */
+  /* BANNER */
+  .banner { background: linear-gradient(135deg, #1a237e, #3949ab); color: white; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .banner-logo { font-size: 2rem; line-height: 1; }
+  .banner-text h1 { font-size: clamp(1.1rem, 3vw, 1.5rem); font-weight: 700; }
+  .banner-text p { font-size: clamp(0.75rem, 2vw, 0.9rem); opacity: 0.85; margin-top: 0.15rem; }
+  .banner-extra { margin-left: auto; text-align: right; font-size: 0.8rem; opacity: 0.8; }
 
   .container { max-width: 860px; margin: 1.5rem auto; padding: 0 1rem; }
+  .card { background: white; border-radius: 12px; padding: 1.25rem; margin-bottom: 1.25rem; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
 
-  .card {
-    background: white;
-    border-radius: 12px;
-    padding: 1.25rem;
-    margin-bottom: 1.25rem;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-  }
-  .card h2 {
-    font-size: clamp(0.95rem, 2.5vw, 1.05rem);
-    font-weight: 600;
-    color: #3949ab;
-    margin-bottom: 0.5rem;
-  }
-  .hint {
-    font-size: clamp(0.75rem, 2vw, 0.85rem);
-    color: #666;
-    font-style: italic;
-    margin-bottom: 1rem;
-    line-height: 1.4;
-  }
+  /* ABAS */
+  .tabs { display: flex; gap: 0; margin-bottom: 1.25rem; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+  .tab-btn { flex: 1; padding: 0.75rem; border: none; background: #e8eaf6; color: #3949ab; font-size: clamp(0.85rem, 2.5vw, 0.95rem); font-weight: 600; cursor: pointer; transition: all 0.2s; }
+  .tab-btn.active { background: linear-gradient(135deg, #1a237e, #3949ab); color: white; }
+  .tab-btn:hover:not(.active) { background: #c5cae9; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
 
-  /* Exemplos */
+  /* PROMPT LIVRE */
+  .hint { font-size: clamp(0.75rem, 2vw, 0.85rem); color: #666; font-style: italic; margin-bottom: 1rem; line-height: 1.4; }
   .examples-label { font-size: 0.85rem; color: #555; margin-bottom: 0.5rem; font-weight: 600; }
-  .examples {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-bottom: 1rem;
-  }
-  .ex-btn {
-    background: #e8eaf6;
-    border: 1.5px solid #c5cae9;
-    border-radius: 20px;
-    padding: 0.3rem 0.75rem;
-    font-size: clamp(0.7rem, 2vw, 0.8rem);
-    cursor: pointer;
-    transition: all 0.2s;
-    line-height: 1.4;
-  }
-  .ex-btn:hover, .ex-btn:active { background: #c5cae9; }
-
-  /* Textarea */
-  textarea {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1.5px solid #c5cae9;
-    border-radius: 8px;
-    font-size: clamp(0.85rem, 2.5vw, 0.95rem);
-    resize: vertical;
-    min-height: 80px;
-    font-family: inherit;
-    line-height: 1.5;
-  }
+  .examples { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+  .ex-btn { background: #e8eaf6; border: 1.5px solid #c5cae9; border-radius: 20px; padding: 0.3rem 0.75rem; font-size: clamp(0.7rem, 2vw, 0.8rem); cursor: pointer; transition: all 0.2s; line-height: 1.4; }
+  .ex-btn:hover { background: #c5cae9; }
+  textarea { width: 100%; padding: 0.75rem; border: 1.5px solid #c5cae9; border-radius: 8px; font-size: clamp(0.85rem, 2.5vw, 0.95rem); resize: vertical; min-height: 80px; font-family: inherit; line-height: 1.5; }
   textarea:focus { outline: none; border-color: #3949ab; }
 
-  /* Opções */
-  .options-row {
-    display: flex;
-    gap: 0.75rem;
-    margin-top: 0.75rem;
-    flex-wrap: wrap;
-    align-items: center;
-    font-size: clamp(0.8rem, 2vw, 0.85rem);
-    color: #444;
-  }
-  select {
-    padding: 0.45rem 0.75rem;
-    border: 1.5px solid #c5cae9;
-    border-radius: 8px;
-    font-size: clamp(0.8rem, 2vw, 0.85rem);
-    flex: 1;
-    min-width: 160px;
-  }
+  /* ASSISTENTE GUIADO */
+  .cat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.6rem; margin-bottom: 1.25rem; }
+  .cat-btn { background: #e8eaf6; border: 2px solid #c5cae9; border-radius: 10px; padding: 0.75rem 0.5rem; text-align: center; cursor: pointer; transition: all 0.2s; font-size: 0.85rem; font-weight: 600; color: #3949ab; }
+  .cat-btn:hover { background: #c5cae9; }
+  .cat-btn.selected { background: linear-gradient(135deg, #1a237e, #3949ab); color: white; border-color: #1a237e; }
+  .cat-btn .cat-icon { font-size: 1.6rem; display: block; margin-bottom: 0.3rem; }
 
-  /* Botão gerar */
-  .btn-gen {
-    background: linear-gradient(135deg, #1a237e, #3949ab);
-    color: white;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 8px;
-    font-size: clamp(0.9rem, 2.5vw, 1rem);
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 1rem;
-    width: 100%;
-    transition: opacity 0.2s;
-    -webkit-tap-highlight-color: transparent;
+  .form-panel { display: none; }
+  .form-panel.active { display: block; }
+  .form-group { margin-bottom: 0.9rem; }
+  .form-group label { display: block; font-size: 0.85rem; font-weight: 600; color: #444; margin-bottom: 0.3rem; }
+  .form-group input[type="text"], .form-group input[type="number"], .form-group select {
+    width: 100%; padding: 0.5rem 0.75rem; border: 1.5px solid #c5cae9; border-radius: 8px; font-size: 0.9rem; font-family: inherit;
   }
+  .form-group input:focus, .form-group select:focus { outline: none; border-color: #3949ab; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .checkbox-group { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.3rem; }
+  .checkbox-group label { display: flex; align-items: center; gap: 0.35rem; font-size: 0.85rem; font-weight: 400; cursor: pointer; }
+  .checkbox-group input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; accent-color: #3949ab; }
+
+  /* OPÇÕES E BOTÕES */
+  .options-row { display: flex; gap: 0.75rem; margin-top: 0.75rem; flex-wrap: wrap; align-items: center; font-size: clamp(0.8rem, 2vw, 0.85rem); color: #444; }
+  select.model-select { padding: 0.45rem 0.75rem; border: 1.5px solid #c5cae9; border-radius: 8px; font-size: clamp(0.8rem, 2vw, 0.85rem); flex: 1; min-width: 160px; }
+  .btn-gen { background: linear-gradient(135deg, #1a237e, #3949ab); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-size: clamp(0.9rem, 2.5vw, 1rem); font-weight: 600; cursor: pointer; margin-top: 1rem; width: 100%; transition: opacity 0.2s; }
   .btn-gen:hover { opacity: 0.9; }
   .btn-gen:disabled { opacity: 0.5; cursor: not-allowed; }
-
   .credits { font-size: 0.72rem; color: #aaa; text-align: right; margin-top: 0.35rem; }
 
-  /* Status */
+  /* STATUS */
   .status { padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.85rem; margin-top: 0.75rem; display: none; line-height: 1.4; }
   .status.info { background: #e3f2fd; color: #0d47a1; display: block; }
   .status.error { background: #ffebee; color: #c62828; display: block; }
   .status.success { background: #e8f5e9; color: #2e7d32; display: block; }
 
-  /* Resultado */
+  /* RESULTADO */
   #result { display: none; }
-  .result-preview { margin-bottom: 1rem; border-radius: 8px; overflow: hidden; }
-  .result-preview iframe {
-    width: 100%;
-    height: clamp(300px, 60vw, 520px);
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    display: block;
-  }
-
-  /* Botões de download */
+  .result-preview iframe { width: 100%; height: clamp(300px, 60vw, 520px); border: 1px solid #e0e0e0; border-radius: 8px; display: block; margin-bottom: 1rem; }
   .btn-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
-  .btn-dl {
-    padding: 0.6rem 1.1rem;
-    border-radius: 8px;
-    border: none;
-    font-size: clamp(0.8rem, 2.5vw, 0.9rem);
-    font-weight: 600;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-    text-align: center;
-    flex: 1;
-    min-width: 120px;
-    -webkit-tap-highlight-color: transparent;
-  }
+  .btn-dl { padding: 0.6rem 1.1rem; border-radius: 8px; border: none; font-size: clamp(0.8rem, 2.5vw, 0.9rem); font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; text-align: center; flex: 1; min-width: 100px; }
   .btn-pdf { background: #c62828; color: white; }
   .btn-png { background: #2e7d32; color: white; }
   .btn-code { background: #e8eaf6; color: #1a237e; border: 1.5px solid #c5cae9; }
   .btn-dl:hover { opacity: 0.85; }
   .btn-dl:disabled { opacity: 0.5; cursor: not-allowed; }
+  .code-block { background: #1e1e2e; color: #cdd6f4; padding: 1rem; border-radius: 8px; font-family: 'Courier New', monospace; font-size: clamp(0.7rem, 2vw, 0.8rem); overflow-x: auto; white-space: pre; display: none; margin-top: 1rem; max-height: 280px; overflow-y: auto; }
 
-  /* Código LaTeX */
-  .code-block {
-    background: #1e1e2e;
-    color: #cdd6f4;
-    padding: 1rem;
-    border-radius: 8px;
-    font-family: 'Courier New', monospace;
-    font-size: clamp(0.7rem, 2vw, 0.8rem);
-    overflow-x: auto;
-    white-space: pre;
-    display: none;
-    margin-top: 1rem;
-    max-height: 280px;
-    overflow-y: auto;
-  }
-
-  /* Spinner */
-  .spinner {
-    display: inline-block;
-    width: 15px; height: 15px;
-    border: 2px solid rgba(255,255,255,0.4);
-    border-top-color: white;
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-    vertical-align: middle;
-    margin-right: 6px;
-  }
+  .spinner { display: inline-block; width: 15px; height: 15px; border: 2px solid rgba(255,255,255,0.4); border-top-color: white; border-radius: 50%; animation: spin 0.8s linear infinite; vertical-align: middle; margin-right: 6px; }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* Mobile tweaks */
   @media (max-width: 480px) {
-    .banner { padding: 0.8rem 1rem; gap: 0.6rem; }
     .banner-extra { display: none; }
-    .card { padding: 1rem; border-radius: 8px; }
-    .btn-row { gap: 0.5rem; }
-    .btn-dl { min-width: 100px; padding: 0.55rem 0.75rem; }
+    .card { padding: 1rem; }
+    .form-row { grid-template-columns: 1fr; }
+    .cat-grid { grid-template-columns: repeat(3, 1fr); }
   }
 </style>
 </head>
 <body>
 
-<!-- ========== BANNER — edita aqui ========== -->
 <div class="banner">
   <div class="banner-logo">📐</div>
   <div class="banner-text">
@@ -228,46 +101,264 @@
     <p>Gerador de imagens matemáticas com TikZ/LaTeX</p>
   </div>
   <div class="banner-extra">
-    <!-- Podes colocar aqui o nome da escola ou um logótipo -->
-    <!-- Exemplo: <img src="logo-escola.png" style="height:40px;opacity:0.9"> -->
     Para Professores de Matemática<br>
     <span style="font-size:0.7rem;opacity:0.7;">by Filipe Galego</span>
   </div>
 </div>
-<!-- ========================================= -->
 
 <div class="container">
-  <div class="card">
-    <h2>✏️ Descreve a imagem que queres criar</h2>
-    <p class="hint">Para melhores resultados escreve um prompt detalhado e se necessário faz ajustes e gera novamente a imagem.</p>
 
-    <p class="examples-label">Exemplos rápidos:</p>
-    <div class="examples">
-      <button class="ex-btn" onclick="setPrompt(this.textContent)">Gráfico da função seno de 0 a 2π com eixos e grelha</button>
-      <button class="ex-btn" onclick="setPrompt(this.textContent)">Circunferência com centro O, raio, diâmetro e corda marcados</button>
-      <button class="ex-btn" onclick="setPrompt(this.textContent)">Diagrama de Venn com dois conjuntos A e B, interseção sombreada</button>
-      <button class="ex-btn" onclick="setPrompt(this.textContent)">Parábola y = x² - 4 com vértice e intersecções com eixos marcados</button>
-      <button class="ex-btn" onclick="setPrompt(this.textContent)">Polígono regular hexágono inscrito numa circunferência</button>
-      <button class="ex-btn" onclick="setPrompt(this.textContent)">Gráfico de barras com 5 valores e eixos rotulados</button>
-      <button class="ex-btn" onclick="setPrompt(this.textContent)">Dois triângulos semelhantes com razão de semelhança 2:3</button>
-      <button class="ex-btn" onclick="setPrompt(this.textContent)">Triângulo retângulo com catetos a=3 e b=4 e hipotenusa c=5. Os labels dos comprimentos devem estar centrados em cada lado.</button>
-    </div>
-
-    <textarea id="prompt" placeholder="Ex: Triângulo isósceles com base 6 cm, lados iguais de 5 cm, altura traçada, ângulos marcados com arcos..."></textarea>
-
-    <div class="options-row">
-      <label>Modelo:</label>
-      <select id="model">
-        <option value="gemini-2.5-pro">Gemini 2.5 Pro (melhor qualidade)</option>
-        <option value="gemini-2.0-flash">Gemini 2.0 Flash (mais rápido)</option>
-      </select>
-    </div>
-
-    <button class="btn-gen" id="btnGen" onclick="generate()">⚡ Gerar Imagem</button>
-    <p class="credits">By Filipe Galego + Claude 4.6</p>
-    <div class="status" id="status"></div>
+  <!-- ABAS -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('livre')">✏️ Prompt Livre</button>
+    <button class="tab-btn" onclick="switchTab('guiado')">🧭 Assistente Guiado</button>
   </div>
 
+  <!-- ABA: PROMPT LIVRE -->
+  <div id="tab-livre" class="tab-content active">
+    <div class="card">
+      <h2>✏️ Descreve a imagem que queres criar</h2>
+      <p class="hint">Para melhores resultados escreve um prompt detalhado e se necessário faz ajustes e gera novamente a imagem.</p>
+      <p class="examples-label">Exemplos rápidos:</p>
+      <div class="examples">
+        <button class="ex-btn" onclick="setPrompt(this.textContent)">Gráfico da função seno de 0 a 2π com eixos e grelha</button>
+        <button class="ex-btn" onclick="setPrompt(this.textContent)">Circunferência com centro O, raio, diâmetro e corda marcados</button>
+        <button class="ex-btn" onclick="setPrompt(this.textContent)">Diagrama de Venn com dois conjuntos A e B, interseção sombreada</button>
+        <button class="ex-btn" onclick="setPrompt(this.textContent)">Parábola y = x² - 4 com vértice e intersecções com eixos marcados</button>
+        <button class="ex-btn" onclick="setPrompt(this.textContent)">Polígono regular hexágono inscrito numa circunferência</button>
+        <button class="ex-btn" onclick="setPrompt(this.textContent)">Gráfico de barras com 5 valores e eixos rotulados</button>
+        <button class="ex-btn" onclick="setPrompt(this.textContent)">Dois triângulos semelhantes com razão de semelhança 2:3</button>
+        <button class="ex-btn" onclick="setPrompt(this.textContent)">Triângulo retângulo com catetos a=3 e b=4 e hipotenusa c=5. Os labels dos comprimentos devem estar centrados em cada lado.</button>
+      </div>
+      <textarea id="prompt-livre" placeholder="Ex: Triângulo isósceles com base 6 cm, lados iguais de 5 cm, altura traçada, ângulos marcados com arcos..."></textarea>
+      <div class="options-row">
+        <label>Modelo:</label>
+        <select class="model-select" id="model-livre">
+          <option value="gemini-2.5-pro">Gemini 2.5 Pro (melhor qualidade)</option>
+          <option value="gemini-2.0-flash">Gemini 2.0 Flash (mais rápido)</option>
+        </select>
+      </div>
+      <button class="btn-gen" id="btnGen" onclick="generate()">⚡ Gerar Imagem</button>
+      <p class="credits">By Filipe Galego + Claude 4.6</p>
+      <div class="status" id="status"></div>
+    </div>
+  </div>
+
+  <!-- ABA: ASSISTENTE GUIADO -->
+  <div id="tab-guiado" class="tab-content">
+    <div class="card">
+      <h2>🧭 Assistente Guiado</h2>
+      <p class="hint">Escolhe uma categoria, preenche os campos e a app constrói o prompt automaticamente.</p>
+
+      <div class="cat-grid">
+        <div class="cat-btn" onclick="selectCat('poligonos')"><span class="cat-icon">⬡</span>Polígonos Regulares</div>
+        <div class="cat-btn" onclick="selectCat('solidos')"><span class="cat-icon">🧊</span>Sólidos Geométricos</div>
+        <div class="cat-btn" onclick="selectCat('funcoes')"><span class="cat-icon">📈</span>Funções e Gráficos</div>
+        <div class="cat-btn" onclick="selectCat('trigonometria')"><span class="cat-icon">📐</span>Trigonometria</div>
+        <div class="cat-btn" onclick="selectCat('probabilidade')"><span class="cat-icon">🎲</span>Probabilidade e Estatística</div>
+        <div class="cat-btn" onclick="selectCat('algebra')"><span class="cat-icon">🔢</span>Álgebra Linear</div>
+      </div>
+
+      <!-- POLÍGONOS REGULARES -->
+      <div id="form-poligonos" class="form-panel">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Número de lados</label>
+            <input type="number" id="pol-lados" min="3" max="12" value="6" placeholder="Ex: 6">
+          </div>
+          <div class="form-group">
+            <label>Raio da circunferência</label>
+            <input type="text" id="pol-raio" value="3cm" placeholder="Ex: 3cm">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Mostrar:</label>
+          <div class="checkbox-group">
+            <label><input type="checkbox" id="pol-angulos" checked> Ângulos internos</label>
+            <label><input type="checkbox" id="pol-raios" checked> Raios</label>
+            <label><input type="checkbox" id="pol-circunferencia" checked> Circunferência circunscrita</label>
+            <label><input type="checkbox" id="pol-apotema"> Apótema</label>
+            <label><input type="checkbox" id="pol-lados-check" checked> Comprimento dos lados</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- SÓLIDOS GEOMÉTRICOS -->
+      <div id="form-solidos" class="form-panel">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Tipo de sólido</label>
+            <select id="sol-tipo">
+              <option>Cubo</option>
+              <option>Paralelepípedo</option>
+              <option>Pirâmide quadrangular</option>
+              <option>Pirâmide triangular (tetraedro)</option>
+              <option>Cilindro</option>
+              <option>Cone</option>
+              <option>Esfera</option>
+              <option>Prisma triangular</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Dimensões (ex: a=3, b=4, h=5)</label>
+            <input type="text" id="sol-dims" value="a=3, h=4" placeholder="Ex: a=3, h=4">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Mostrar:</label>
+          <div class="checkbox-group">
+            <label><input type="checkbox" id="sol-ocultas" checked> Arestas ocultas (tracejado)</label>
+            <label><input type="checkbox" id="sol-dims-check" checked> Dimensões cotadas</label>
+            <label><input type="checkbox" id="sol-vertices" checked> Vértices identificados</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- FUNÇÕES E GRÁFICOS -->
+      <div id="form-funcoes" class="form-panel">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Tipo de função</label>
+            <select id="fun-tipo">
+              <option>Quadrática (parábola)</option>
+              <option>Linear (reta)</option>
+              <option>Seno</option>
+              <option>Cosseno</option>
+              <option>Tangente</option>
+              <option>Exponencial</option>
+              <option>Logarítmica</option>
+              <option>Valor absoluto</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Expressão da função</label>
+            <input type="text" id="fun-expr" value="x^2 - 4" placeholder="Ex: x^2 - 4">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Intervalo x (de)</label>
+            <input type="number" id="fun-xmin" value="-4">
+          </div>
+          <div class="form-group">
+            <label>Intervalo x (até)</label>
+            <input type="number" id="fun-xmax" value="4">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Mostrar:</label>
+          <div class="checkbox-group">
+            <label><input type="checkbox" id="fun-zeros" checked> Zeros / interseções com eixos</label>
+            <label><input type="checkbox" id="fun-vertice" checked> Vértice / ponto notável</label>
+            <label><input type="checkbox" id="fun-grelha" checked> Grelha</label>
+            <label><input type="checkbox" id="fun-assint"> Assíntotas</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRIGONOMETRIA -->
+      <div id="form-trigonometria" class="form-panel">
+        <div class="form-group">
+          <label>Tipo de figura</label>
+          <select id="trig-tipo">
+            <option>Triângulo retângulo com razões trigonométricas</option>
+            <option>Circunferência trigonométrica com ângulo</option>
+            <option>Triângulo com lei dos senos/cossenos</option>
+            <option>Gráfico de seno e cosseno sobrepostos</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Ângulo (graus)</label>
+            <input type="number" id="trig-angulo" value="30" placeholder="Ex: 30">
+          </div>
+          <div class="form-group">
+            <label>Medidas conhecidas</label>
+            <input type="text" id="trig-medidas" value="hipotenusa=5" placeholder="Ex: hipotenusa=5">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Mostrar:</label>
+          <div class="checkbox-group">
+            <label><input type="checkbox" id="trig-labels" checked> Labels dos lados</label>
+            <label><input type="checkbox" id="trig-valores" checked> Valores das razões</label>
+            <label><input type="checkbox" id="trig-arco" checked> Arco do ângulo</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROBABILIDADE E ESTATÍSTICA -->
+      <div id="form-probabilidade" class="form-panel">
+        <div class="form-group">
+          <label>Tipo de diagrama</label>
+          <select id="prob-tipo">
+            <option>Diagrama de Venn (2 conjuntos)</option>
+            <option>Diagrama de Venn (3 conjuntos)</option>
+            <option>Gráfico de barras</option>
+            <option>Histograma</option>
+            <option>Diagrama de caule-e-folhas</option>
+            <option>Diagrama em árvore</option>
+            <option>Tabela de frequências</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Dados / valores (separa por vírgulas)</label>
+          <input type="text" id="prob-dados" value="A=30, B=20, A∩B=10" placeholder="Ex: A=30, B=20, A∩B=10">
+        </div>
+        <div class="form-group">
+          <label>Título do gráfico (opcional)</label>
+          <input type="text" id="prob-titulo" placeholder="Ex: Resultados do inquérito">
+        </div>
+        <div class="form-group">
+          <label>Mostrar:</label>
+          <div class="checkbox-group">
+            <label><input type="checkbox" id="prob-valores" checked> Valores/frequências</label>
+            <label><input type="checkbox" id="prob-sombra" checked> Sombreado nas regiões</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- ÁLGEBRA LINEAR -->
+      <div id="form-algebra" class="form-panel">
+        <div class="form-group">
+          <label>Tipo</label>
+          <select id="alg-tipo">
+            <option>Vetores no plano</option>
+            <option>Vetores no espaço (3D)</option>
+            <option>Transformação linear (matriz 2x2)</option>
+            <option>Sistema de equações (2 retas)</option>
+            <option>Sistema de equações (3 planos)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Dados (vetores, matriz ou equações)</label>
+          <input type="text" id="alg-dados" value="u=(2,3), v=(-1,2)" placeholder="Ex: u=(2,3), v=(-1,2)">
+        </div>
+        <div class="form-group">
+          <label>Mostrar:</label>
+          <div class="checkbox-group">
+            <label><input type="checkbox" id="alg-coords" checked> Coordenadas</label>
+            <label><input type="checkbox" id="alg-soma" checked> Vetor soma/resultado</label>
+            <label><input type="checkbox" id="alg-angulo" checked> Ângulo entre vetores</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modelo + Botão (assistente) -->
+      <div class="options-row" style="margin-top:1rem;">
+        <label>Modelo:</label>
+        <select class="model-select" id="model-guiado">
+          <option value="gemini-2.5-pro">Gemini 2.5 Pro (melhor qualidade)</option>
+          <option value="gemini-2.0-flash">Gemini 2.0 Flash (mais rápido)</option>
+        </select>
+      </div>
+      <button class="btn-gen" id="btnGenGuiado" onclick="generateGuiado()">⚡ Gerar Imagem</button>
+      <p class="credits">By Filipe Galego + Claude 4.6</p>
+      <div class="status" id="status-guiado"></div>
+    </div>
+  </div>
+
+  <!-- RESULTADO (partilhado pelas duas abas) -->
   <div class="card" id="result">
     <h2>🖼️ Resultado</h2>
     <div class="result-preview" id="previewArea"></div>
@@ -278,97 +369,198 @@
     </div>
     <pre class="code-block" id="codeBlock"></pre>
   </div>
+
 </div>
 
 <script>
-  function setPrompt(t) {
-    document.getElementById('prompt').value = t;
-    document.getElementById('prompt').focus();
-    window.scrollTo({ top: document.getElementById('prompt').offsetTop - 20, behavior: 'smooth' });
+// ---- ABAS ----
+function switchTab(tab) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  document.querySelectorAll('.tab-btn')[tab === 'livre' ? 0 : 1].classList.add('active');
+}
+
+// ---- CATEGORIAS ----
+let currentCat = null;
+function selectCat(cat) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('.form-panel').forEach(p => p.classList.remove('active'));
+  event.currentTarget.classList.add('selected');
+  document.getElementById('form-' + cat).classList.add('active');
+  currentCat = cat;
+}
+
+// ---- PROMPT LIVRE ----
+function setPrompt(t) {
+  document.getElementById('prompt-livre').value = t;
+  document.getElementById('prompt-livre').focus();
+}
+
+async function generate() {
+  const prompt = document.getElementById('prompt-livre').value.trim();
+  const model = document.getElementById('model-livre').value;
+  if (!prompt) return alert('Por favor escreve uma descrição.');
+  await doGenerate(prompt, model, 'btnGen', 'status');
+}
+
+// ---- ASSISTENTE GUIADO ----
+function buildPrompt() {
+  if (!currentCat) return null;
+
+  if (currentCat === 'poligonos') {
+    const lados = document.getElementById('pol-lados').value;
+    const raio = document.getElementById('pol-raio').value;
+    const extras = [];
+    if (document.getElementById('pol-angulos').checked) extras.push('ângulos internos marcados com arcos e valores');
+    if (document.getElementById('pol-raios').checked) extras.push('raios traçados do centro a cada vértice');
+    if (document.getElementById('pol-circunferencia').checked) extras.push('circunferência circunscrita visível');
+    if (document.getElementById('pol-apotema').checked) extras.push('apótema traçada');
+    if (document.getElementById('pol-lados-check').checked) extras.push('comprimento dos lados centrado em cada lado');
+    return `Polígono regular com ${lados} lados, inscrito numa circunferência de raio ${raio}. Mostrar: ${extras.join(', ')}. Os labels devem estar centrados nos segmentos.`;
   }
 
-  async function generate() {
-    const prompt = document.getElementById('prompt').value.trim();
-    const model = document.getElementById('model').value;
-    if (!prompt) return alert('Por favor escreve uma descrição.');
-
-    const btn = document.getElementById('btnGen');
-    btn.disabled = true;
-    btn.innerHTML = '<span class="spinner"></span> A gerar código TikZ...';
-    setStatus('info', '🤖 A contactar o modelo...');
-    document.getElementById('result').style.display = 'none';
-
-    try {
-      const resp = await fetch('/generate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt, model })
-      });
-      const data = await resp.json();
-      if (!resp.ok) throw new Error(data.error || 'Erro desconhecido');
-
-      const code = data.code;
-      document.getElementById('codeBlock').textContent = code;
-      document.getElementById('btnPng').dataset.code = code;
-
-      setStatus('info', '📐 Código gerado! A compilar com LaTeX.Online...');
-      btn.innerHTML = '<span class="spinner"></span> A compilar LaTeX...';
-
-      const encoded = encodeURIComponent(code);
-      const pdfUrl = 'https://latexonline.cc/compile?text=' + encoded + '&command=pdflatex';
-      document.getElementById('previewArea').innerHTML =
-        `<iframe src="${pdfUrl}" title="Imagem LaTeX"></iframe>`;
-      document.getElementById('btnPdf').href = pdfUrl;
-      document.getElementById('result').style.display = 'block';
-      document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
-      setStatus('success', '✅ Imagem gerada com sucesso!');
-    } catch (e) {
-      setStatus('error', '❌ Erro: ' + e.message);
-    } finally {
-      btn.disabled = false;
-      btn.innerHTML = '⚡ Gerar Imagem';
-    }
+  if (currentCat === 'solidos') {
+    const tipo = document.getElementById('sol-tipo').value;
+    const dims = document.getElementById('sol-dims').value;
+    const extras = [];
+    if (document.getElementById('sol-ocultas').checked) extras.push('arestas ocultas a tracejado');
+    if (document.getElementById('sol-dims-check').checked) extras.push('dimensões cotadas centradas nos segmentos');
+    if (document.getElementById('sol-vertices').checked) extras.push('vértices identificados com letras');
+    return `${tipo} com dimensões ${dims}. Desenhar em perspetiva. Mostrar: ${extras.join(', ')}.`;
   }
 
-  async function downloadPng() {
-    const btn = document.getElementById('btnPng');
-    const code = btn.dataset.code;
-    if (!code) return alert('Gera uma imagem primeiro.');
-    btn.textContent = '⏳ A gerar...';
-    btn.disabled = true;
-    try {
-      const resp = await fetch('/png', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ code })
-      });
-      if (!resp.ok) {
-        const err = await resp.json();
-        throw new Error(err.error || 'Erro desconhecido');
-      }
-      const blob = await resp.blob();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = 'imagem-matematica.png'; a.click();
-      URL.revokeObjectURL(url);
-    } catch (e) {
-      alert('Erro ao gerar PNG: ' + e.message);
-    } finally {
-      btn.textContent = '⬇ PNG';
-      btn.disabled = false;
-    }
+  if (currentCat === 'funcoes') {
+    const tipo = document.getElementById('fun-tipo').value;
+    const expr = document.getElementById('fun-expr').value;
+    const xmin = document.getElementById('fun-xmin').value;
+    const xmax = document.getElementById('fun-xmax').value;
+    const extras = [];
+    if (document.getElementById('fun-zeros').checked) extras.push('zeros e interseções com os eixos marcados');
+    if (document.getElementById('fun-vertice').checked) extras.push('vértice ou ponto notável marcado com coordenadas');
+    if (document.getElementById('fun-grelha').checked) extras.push('grelha de fundo');
+    if (document.getElementById('fun-assint').checked) extras.push('assíntotas a tracejado');
+    return `Gráfico da função ${tipo}: f(x) = ${expr}, para x entre ${xmin} e ${xmax}. Mostrar: ${extras.join(', ')}. Eixos com setas e labels. Usar apenas valores numéricos decimais nas coordenadas.`;
   }
 
-  function setStatus(type, msg) {
-    const el = document.getElementById('status');
-    el.className = 'status ' + type;
-    el.textContent = msg;
+  if (currentCat === 'trigonometria') {
+    const tipo = document.getElementById('trig-tipo').value;
+    const angulo = document.getElementById('trig-angulo').value;
+    const medidas = document.getElementById('trig-medidas').value;
+    const extras = [];
+    if (document.getElementById('trig-labels').checked) extras.push('labels dos lados centrados nos segmentos');
+    if (document.getElementById('trig-valores').checked) extras.push('valores das razões trigonométricas');
+    if (document.getElementById('trig-arco').checked) extras.push('arco do ângulo marcado');
+    return `${tipo}, com ângulo de ${angulo}° e ${medidas}. Mostrar: ${extras.join(', ')}.`;
   }
 
-  function toggleCode() {
-    const el = document.getElementById('codeBlock');
-    el.style.display = el.style.display === 'block' ? 'none' : 'block';
+  if (currentCat === 'probabilidade') {
+    const tipo = document.getElementById('prob-tipo').value;
+    const dados = document.getElementById('prob-dados').value;
+    const titulo = document.getElementById('prob-titulo').value;
+    const extras = [];
+    if (document.getElementById('prob-valores').checked) extras.push('valores e frequências visíveis');
+    if (document.getElementById('prob-sombra').checked) extras.push('regiões sombreadas');
+    return `${tipo} com os seguintes dados: ${dados}. ${titulo ? 'Título: ' + titulo + '.' : ''} Mostrar: ${extras.join(', ')}.`;
   }
+
+  if (currentCat === 'algebra') {
+    const tipo = document.getElementById('alg-tipo').value;
+    const dados = document.getElementById('alg-dados').value;
+    const extras = [];
+    if (document.getElementById('alg-coords').checked) extras.push('coordenadas de cada vetor');
+    if (document.getElementById('alg-soma').checked) extras.push('vetor soma ou resultado da transformação');
+    if (document.getElementById('alg-angulo').checked) extras.push('ângulo entre os vetores');
+    return `${tipo} com ${dados}. Mostrar: ${extras.join(', ')}. Labels centrados nos segmentos/vetores.`;
+  }
+
+  return null;
+}
+
+async function generateGuiado() {
+  if (!currentCat) return alert('Por favor escolhe uma categoria.');
+  const prompt = buildPrompt();
+  if (!prompt) return alert('Por favor preenche os campos.');
+  const model = document.getElementById('model-guiado').value;
+  await doGenerate(prompt, model, 'btnGenGuiado', 'status-guiado');
+}
+
+// ---- GERAR (comum) ----
+async function doGenerate(prompt, model, btnId, statusId) {
+  const btn = document.getElementById(btnId);
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> A gerar código TikZ...';
+  setStatus(statusId, 'info', '🤖 A contactar o modelo...');
+  document.getElementById('result').style.display = 'none';
+
+  try {
+    const resp = await fetch('/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt, model })
+    });
+    const data = await resp.json();
+    if (!resp.ok) throw new Error(data.error || 'Erro desconhecido');
+
+    const code = data.code;
+    document.getElementById('codeBlock').textContent = code;
+    document.getElementById('btnPng').dataset.code = code;
+
+    setStatus(statusId, 'info', '📐 Código gerado! A compilar com LaTeX.Online...');
+    btn.innerHTML = '<span class="spinner"></span> A compilar LaTeX...';
+
+    const pdfUrl = 'https://latexonline.cc/compile?text=' + encodeURIComponent(code) + '&command=pdflatex';
+    document.getElementById('previewArea').innerHTML =
+      `<iframe src="${pdfUrl}" title="Imagem LaTeX"></iframe>`;
+    document.getElementById('btnPdf').href = pdfUrl;
+    document.getElementById('result').style.display = 'block';
+    document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setStatus(statusId, 'success', '✅ Imagem gerada com sucesso!');
+  } catch (e) {
+    setStatus(statusId, 'error', '❌ Erro: ' + e.message);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '⚡ Gerar Imagem';
+  }
+}
+
+// ---- PNG ----
+async function downloadPng() {
+  const btn = document.getElementById('btnPng');
+  const code = btn.dataset.code;
+  if (!code) return alert('Gera uma imagem primeiro.');
+  btn.textContent = '⏳ A gerar...';
+  btn.disabled = true;
+  try {
+    const resp = await fetch('/png', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code })
+    });
+    if (!resp.ok) { const err = await resp.json(); throw new Error(err.error || 'Erro'); }
+    const blob = await resp.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'imagem-matematica.png'; a.click();
+    URL.revokeObjectURL(url);
+  } catch (e) {
+    alert('Erro ao gerar PNG: ' + e.message);
+  } finally {
+    btn.textContent = '⬇ PNG';
+    btn.disabled = false;
+  }
+}
+
+function setStatus(id, type, msg) {
+  const el = document.getElementById(id);
+  el.className = 'status ' + type;
+  el.textContent = msg;
+}
+
+function toggleCode() {
+  const el = document.getElementById('codeBlock');
+  el.style.display = el.style.display === 'block' ? 'none' : 'block';
+}
 </script>
 </body>
 </html>
