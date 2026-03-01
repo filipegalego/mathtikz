@@ -28,7 +28,7 @@ Regras obrigatórias:
 - Imagem com boa margem e proporções para impressão A4
 - Verifica SEMPRE a correção matemática: coordenadas, interseções, vértices, ângulos e labels devem ser matematicamente exatos
 - Em gráficos de funções: calcula analiticamente os zeros, vértices e pontos notáveis antes de os marcar
-- Labels e coordenadas NUNCA devem sobrepor-se: usa deslocamentos explícitos com node[above left], node[below right], node[anchor=north], etc.
+- Labels de pontos e coordenadas devem ter SEMPRE um afastamento explícito para não tocar nas linhas, eixos ou pontos. Usa sempre um deslocamento como `node[above right, xshift=2pt, yshift=2pt]`, `node[below left, xshift=-2pt, yshift=-2pt]` ou similar. NUNCA coloques um label diretamente sobre uma linha, eixo ou ponto sem deslocamento
 - Nas marcas dos eixos em pgfplots USA APENAS as opções nativas: `xtick={...}`, `ytick={...}`, `xticklabels={...}`, `yticklabels={...}`. NUNCA uses `node[below]` ou `node[left]` dentro das opções do axis — isso causa erros de compilação
 - Em pgfplots, para a posição da legenda usa APENAS: `legend pos=north east`, `legend pos=north west`, `legend pos=south east`, `legend pos=south west` ou `legend pos=outer north east`. NUNCA uses `legend pos=major` ou outros valores inválidos
 - Labels de segmentos de reta (comprimentos, letras) devem aparecer SEMPRE no ponto médio do segmento, nunca nas extremidades.
