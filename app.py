@@ -29,7 +29,8 @@ Regras obrigatórias:
 - Verifica SEMPRE a correção matemática: coordenadas, interseções, vértices, ângulos e labels devem ser matematicamente exatos
 - Em gráficos de funções: calcula analiticamente os zeros, vértices e pontos notáveis antes de os marcar
 - Labels e coordenadas NUNCA devem sobrepor-se: usa deslocamentos explícitos com node[above left], node[below right], node[anchor=north], etc.
-- Nas marcas dos eixos usa node[below] para eixo x e node[left] para eixo y, com espaçamento suficiente
+- Nas marcas dos eixos em pgfplots USA APENAS as opções nativas: `xtick={...}`, `ytick={...}`, `xticklabels={...}`, `yticklabels={...}`. NUNCA uses `node[below]` ou `node[left]` dentro das opções do axis — isso causa erros de compilação
+- Para labels dos eixos usa `xlabel={...}` e `ylabel={...}` nas opções do \begin{axis}
 - Labels de segmentos de reta (comprimentos, letras) devem aparecer SEMPRE no ponto médio do segmento, nunca nas extremidades.
   OBRIGATÓRIO: usa SEMPRE a sintaxe \draw (A) -- node[midway, above] {$a$} (B); com o node ENTRE os dois pontos e a opção midway.
   PROIBIDO: \draw (A) -- (B) node[...] {$a$}; — esta sintaxe coloca o label na extremidade B, NUNCA a uses para labels de comprimento.
