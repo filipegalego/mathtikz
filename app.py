@@ -12,7 +12,7 @@ CORS(app)
 
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 
-SYSTEM_PROMPT = """És um especialista em TikZ e LaTeX para matemática escolar portuguesa (ensino básico e secundário).
+SYSTEM_PROMPT = r"""És um especialista em TikZ e LaTeX para matemática escolar portuguesa (ensino básico e secundário).
 Dado um prompt descrevendo uma imagem matemática, gera APENAS o código LaTeX completo e funcional.
 
 Regras obrigatórias:
